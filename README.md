@@ -67,6 +67,53 @@ Secure the API so that authentication is needed to access it. The details are up
 Good luck!
 ❤️ mytaxi
 
+The username and password for the token generation are that of drivers username and password. In database, the password are encrypted for all the drivers and for the newly added drivers as well. The currents details are as below. 
+
+username	password
+driver01	driver01pw
+driver02	driver02pw
+
+And so on, for diver02, his password is driver01pw until driver08.
+
+To get a valid token from postman, please select below url 
+
+http://localhost:8080/oauth/token
+
+Then, select Authorization tab in postman and select Basic Authentication from Type dropdown
+We have to put below credentials on the right side of the window.
+
+username = my-trusted-client
+password = secret
+
+//Above are mentioned in the code, currently they are hardcoded. I have already decided to read these values from the, but haven’t done it as of now.
+//Just created the config for now.
+
+            .withClient("my-trusted-client")
+            .authorizedGrantTypes("client_credentials", "password")
+            .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+            .scopes("read", "write", "trust")
+            .resourceIds("oauth2-resource")
+            .accessTokenValiditySeconds(5000)
+            .secret(passwordEncoder.encode("secret"));
+
+
+Next, when you are trying to hit any endpoint of the application, type in the url
+
+And select Authorization tab, this time to select the TYPE with value OAuth2.0 
+
+Select Add authorization data to with value Request Headers
+
+And copy the token on the right side against Access Token. You are ready to hit the request.
+
+Alternately you can also do this
+
+1.	 select Authorization tab, this time to select the TYPE with value Inherit auth from Parent (This is default setting, hence no need to do this, directly follow second step)
+
+2.	 then Select Header, and put in key as Authorization and put value as bearer <token_generated_above>
+example
+bearer 11eb5fd6-1a38-4ab1-b42b-beb31d1d73d9
+
+
 
 
 _NOTE: Please make sure to not submit any personal data with your tests result. Personal data is for example your name, your birth date, email address etc._
