@@ -14,7 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -33,7 +32,6 @@ import com.mytaxi.service.car.DefaultCarService;
 import com.mytaxi.specification.SearchDriverSpecification;
 
 public class DefaultDriverServiceTest extends TestUtils
-
 {
 
     @Mock

@@ -24,7 +24,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.mytaxi.domainvalue.GeoCoordinate;
 import com.mytaxi.domainvalue.OnlineStatus;
-import com.mytaxi.util.EncryptionUtils;
 
 @Entity
 @Table(
@@ -32,6 +31,12 @@ import com.mytaxi.util.EncryptionUtils;
     uniqueConstraints = @UniqueConstraint(name = "uc_username", columnNames = {"username"}))
 public class DriverDO implements UserDetails
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+
     public static final class ColumnNames
     {
         private ColumnNames()
@@ -79,6 +84,7 @@ public class DriverDO implements UserDetails
     private CarDO car;
 
 
+    @SuppressWarnings("unused")
     private DriverDO()
     {}
 

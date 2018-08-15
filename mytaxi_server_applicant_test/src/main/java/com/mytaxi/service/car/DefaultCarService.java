@@ -59,13 +59,13 @@ public class DefaultCarService implements CarService
      * @param carDO
      * @return
      * @throws ConstraintsViolationException
-     *             if a car already exists with the given username, ... .
+     *             if a car already exists with the given license_plate, ... .
      * @throws EntityNotFoundException
+     *             if no manufacturer with the given id was found
      */
     @Override
     public CarDO create(CarDO carDO) throws ConstraintsViolationException, EntityNotFoundException
     {
-
         CarDO car;
         try
         {
@@ -92,25 +92,14 @@ public class DefaultCarService implements CarService
     @Transactional
     public void delete(Long carId) throws EntityNotFoundException
     {
-
         CarDO carDO = findCarChecked(carId);
         carDO.setDeleted(true);
     }
 
-
-    /**
-     * Update the car details.
-     *
-     * @param carId
-     * @param carDO
-     * @throws EntityNotFoundException
-     * @throws ConstraintsViolationException
-     */
-
     /**
      * Find all cars by car status state.
      *
-     * @param onlineStatus
+     * @param carStatus
      */
     @Override
     public List<CarDO> find(CarStatus carStatus)
@@ -118,7 +107,13 @@ public class DefaultCarService implements CarService
         return carRepository.findByCarStatus(carStatus);
     }
 
-
+    /**
+     * Find the car by id.
+     *
+     * @param carId
+     * @throws EntityNotFoundException
+     *              if no car with the given id was found
+     */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     private CarDO findCarChecked(Long carId) throws EntityNotFoundException
     {
@@ -126,7 +121,15 @@ public class DefaultCarService implements CarService
             .orElseThrow(() -> new EntityNotFoundException("Could not find Car with id: " + carId));
     }
 
-
+    /**
+     * Update the car details.
+     *
+     * @param carId
+     * @param status
+     * @param rating
+     * @throws EntityNotFoundException
+     *                  if no car with the given id was found
+     */
     @Override
     @Transactional
     public void update(Long carId, CarStatus status, CarRating rating) throws EntityNotFoundException
@@ -142,7 +145,14 @@ public class DefaultCarService implements CarService
         }
     }
 
-
+    /**
+     * Update the car details.
+     *
+     * @param carId
+     * @param status
+     * @throws EntityNotFoundException
+     *                  if no car with the given id was found
+     */
     @Override
     public void update(Long carId, CarStatus status) throws EntityNotFoundException
     {
@@ -150,7 +160,14 @@ public class DefaultCarService implements CarService
 
     }
 
-
+    /**
+     * Update the car details.
+     *
+     * @param carId
+     * @param rating
+     * @throws EntityNotFoundException
+     *                  if no car with the given id was found
+     */
     @Override
     public void update(Long carId, CarRating rating) throws EntityNotFoundException
     {
@@ -158,7 +175,13 @@ public class DefaultCarService implements CarService
 
     }
 
-
+    /**
+     * To check if Manufacturer exists.
+     *
+     * @param manufacturerId
+     * @throws EntityNotFoundException
+     *              if no manufacturer with the given id was found
+     */
     private ManufacturerDO manufacturerCheck(final Long manufacturerId) throws EntityNotFoundException
     {
         return manufacturerRepository.findById(manufacturerId).orElseThrow(

@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 import org.junit.Assert;
 
-@SuppressWarnings("PMD")
 public class ConstantsTestUtil
 {
 
@@ -24,7 +23,7 @@ public class ConstantsTestUtil
      * @param map The expected constants mapping.
      * @throws java.lang.IllegalAccessException
      */
-    public static void testStringConstants(final Class clazz,
+    public static void testStringConstants(final Class<?> clazz,
         final Map<String, String> map) throws IllegalArgumentException, IllegalAccessException
     {
         final Set<String> foundConstants = new HashSet<>();

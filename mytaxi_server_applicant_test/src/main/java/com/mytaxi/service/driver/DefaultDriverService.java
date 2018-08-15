@@ -117,6 +117,7 @@ public class DefaultDriverService implements DriverService
      * @param longitude
      * @param latitude
      * @throws EntityNotFoundException
+     *               if no driver with the given id was found.
      */
     @Override
     @Transactional
@@ -139,13 +140,29 @@ public class DefaultDriverService implements DriverService
     }
 
 
+    /**
+     * Find an existing driver by id.
+     *
+     * @param driverId
+     * @throws EntityNotFoundException
+     *             if no driver with the given id was found.
+     */
     private DriverDO findDriverChecked(Long driverId) throws EntityNotFoundException
     {
         return driverRepository.findById(driverId)
             .orElseThrow(() -> new EntityNotFoundException("Could not find driver with id: " + driverId));
     }
 
-
+    /**
+     * Deletes an existing driver by id who is not deleted and Online
+     *
+     * @param driverId
+     * @throws EntityNotFoundException
+     *             if no driver with the given id was found.
+     *             if driver found with given id is deleted.
+     * @throws ConstraintsViolationException
+     *             if driver found with given id is not Online
+     */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     private DriverDO findOnlineDriver(Long driverId) throws EntityNotFoundException, ConstraintsViolationException
     {
@@ -164,7 +181,22 @@ public class DefaultDriverService implements DriverService
         return driverDO;
     }
 
-
+    /**
+     * Allows an existing driver by id to select a car by id
+     *
+     * @param driverId
+     * @param carId
+     * @throws EntityNotFoundException
+     *             if no driver with the given id was found.
+     *             if driver found with given id is deleted.
+     *             if no car with the given id was found.
+     *             if car found with given id is deleted.
+     * @throws ConstraintsViolationException
+     *             if driver found with given id is not Online
+     *             if car previously assigned to driver is BUSY.
+     * @throws CarAlreadyInUseException
+     *             if car found with given id is not OFF_DUTY            
+     */
     @Transactional
     @Override
     public DriverDO selectCar(Long driverId, Long carId) throws EntityNotFoundException, ConstraintsViolationException,
@@ -205,7 +237,20 @@ public class DefaultDriverService implements DriverService
         return driverDO;
     }
 
-
+    /**
+     * Allows an existing driver by id to deselect a car
+     * 
+     * @param driverId
+     * @throws EntityNotFoundException
+     *             if no driver with the given id was found.
+     *             if driver found with given id is deleted.
+     *             if no car with the given id was found.
+     *             if car found with given id is deleted.
+     * @throws ConstraintsViolationException
+     *             if driver found with given id is not Online
+     *             if car previously assigned to driver is BUSY.
+     *         
+     */
     @Transactional
     @Override
     public DriverDO deselectCar(Long driverId)
@@ -231,7 +276,19 @@ public class DefaultDriverService implements DriverService
         return driverDO;
     }
 
-
+    /**
+     * Allows to generate SearchDriverFilter by 
+     * attributes of drivers like username, onlineStatus
+     * attributes of cars like licensePlate, rating
+     * attributes of manufacturer like name
+     * 
+     * @param uuid
+     * @param username
+     * @param onlineStatus
+     * @param licensePlate
+     * @param rating
+     * @param manufacturerName        
+     */
     @Override
     public SearchDriverFilter checkSearchDriverFilter(String uuid, String username, OnlineStatus onlineStatus,
         String licensePlate, CarRating rating, String manufacturerName)
@@ -246,6 +303,14 @@ public class DefaultDriverService implements DriverService
     }
 
 
+    /**
+     * Allows to search driver by searchDriverFilters which has
+     * attributes of drivers like username, onlineStatus
+     * attributes of cars like licensePlate, rating
+     * attributes of manufacturer like name
+     * 
+     * @param searchDriverFilter     
+     */
     @Override
     public List<DriverDO> searchDriver(SearchDriverFilter searchDriverFilter)
     {

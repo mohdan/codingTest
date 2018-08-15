@@ -136,7 +136,8 @@ public class DriverController
         @RequestParam Optional<CarRating> rating, @RequestParam Optional<String> manufacturerName,
         HttpServletRequest request) throws ConstraintsViolationException, EntityNotFoundException
     {
-        //This we use for the all the request to track each request.
+        //This we use for the all the request to track each request. Not used everywhere. Just demostrated here.
+        //We generate the uuid at the interceptor for every hit.
         final String uuid = (String) request.getAttribute(UtilityConstants.UUID_CONSTANT);
         final Response response = new Response();
         response.setUuid(uuid);
@@ -146,7 +147,7 @@ public class DriverController
             username.isPresent() ? username.get() : null, onlineStatus.isPresent() ? onlineStatus.get() : null,
             licensePlate.isPresent() ? licensePlate.get() : null, rating.isPresent() ? rating.get() : null,
             manufacturerName.isPresent() ? manufacturerName.get() : null);
-        response.setData(driverService.searchDriver(filter));
+        response.setData(driverCarMapper.makeDriverCarDTOList(driverService.searchDriver(filter)));
         return buildHttpResp(uuid, response, HttpStatus.OK);
 
     }

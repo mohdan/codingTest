@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
@@ -12,18 +11,12 @@ import com.mytaxi.datatransferobject.DriverCarDTO;
 import com.mytaxi.domainobject.CarDO;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainvalue.GeoCoordinate;
-import com.mytaxi.exception.EncryptDecryptException;
-import com.mytaxi.util.EncryptionUtils;
 
 @Component
 public class DriverCarMapper
 {
 
-    @Autowired
-    EncryptionUtils encryptionUtils;
-
-
-    public DriverDO makeDriverDO(DriverCarDTO driverCarDTO) throws EncryptDecryptException
+    public DriverDO makeDriverDO(DriverCarDTO driverCarDTO)
     {
         String password = BCrypt.hashpw(driverCarDTO.getPassword(), BCrypt.gensalt());
 
@@ -31,7 +24,7 @@ public class DriverCarMapper
     }
 
 
-    public DriverCarDTO makeDriverCarDTO(DriverDO driverDO) throws EncryptDecryptException
+    public DriverCarDTO makeDriverCarDTO(DriverDO driverDO)
     {
         DriverCarDTO.DriverDTOBuilder driverCarDTOBuilder;
 
@@ -47,7 +40,7 @@ public class DriverCarMapper
         CarDO car = driverDO.getCar();
         if (car != null)
         {
-            driverCarDTOBuilder.setCar(CarMapper.makeCarDTO(car));
+            driverCarDTOBuilder.setCar(CarManufacturerMapper.makeCarManufacturerDTO(car));
 
         }
 

@@ -81,6 +81,7 @@ public class CarDO
     private ManufacturerDO manufacturer;
 
 
+    @SuppressWarnings("unused")
     private CarDO()
     {}
 

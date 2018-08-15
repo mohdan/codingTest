@@ -14,7 +14,9 @@ public class SearchDriverSpecification implements Specification<DriverDO>
 {
 
     /**
-     * 
+     * Below are the attributes name from DO 
+     * for driver, car and manufacturer
+     * in order to search for driver base on these
      */
     private static final long serialVersionUID = 1L;
 
@@ -35,7 +37,20 @@ public class SearchDriverSpecification implements Specification<DriverDO>
         this.searchDriverFilter = searchDriverFilter;
     }
 
-
+    /**
+     * Allows to generate SearchDriverSpecification 
+     * by using SearchFiler details which has
+     * attributes of drivers like username, onlineStatus
+     * attributes of cars like licensePlate, rating
+     * attributes of manufacturer like name
+     * 
+     * @param uuid
+     * @param username
+     * @param onlineStatus
+     * @param licensePlate
+     * @param rating
+     * @param manufacturerName        
+     */
     @Override
     public Predicate toPredicate(Root<DriverDO> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteraBuilder)
     {

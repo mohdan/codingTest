@@ -1,5 +1,10 @@
 package com.mytaxi.dataaccessobject;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,14 +17,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.mytaxi.MytaxiServerApplicantTestApplication;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainvalue.OnlineStatus;
-import com.mytaxi.domainvalue.car.CarRating;
-import com.mytaxi.domainvalue.car.CarStatus;
 import com.mytaxi.filter.SearchDriverFilter;
 import com.mytaxi.specification.SearchDriverSpecification;
-
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = MytaxiServerApplicantTestApplication.class)

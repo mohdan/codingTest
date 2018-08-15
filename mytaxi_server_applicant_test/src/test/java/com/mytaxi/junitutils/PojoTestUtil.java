@@ -19,7 +19,6 @@ import org.junit.Assert;
 import org.mockito.Mockito;
 import org.springframework.data.domain.Page;
 
-@SuppressWarnings("PMD")
 public class PojoTestUtil
 {
 
@@ -151,7 +150,7 @@ public class PojoTestUtil
                 {
                     field.setAccessible(true);
                 }
-                Class fieldClass = field.getType();
+                Class<?> fieldClass = field.getType();
                 final Object fieldObj = initialiseType(fieldClass);
                 switch (mode)
                 {
@@ -198,7 +197,7 @@ public class PojoTestUtil
     }
 
 
-    private static Object initialiseType(Class fieldClass) throws InstantiationException, IllegalAccessException
+    private static Object initialiseType(Class<?> fieldClass) throws InstantiationException, IllegalAccessException
     {
         if (fieldClass == Long.class || fieldClass == long.class)
         {
@@ -271,12 +270,12 @@ public class PojoTestUtil
      * @throws java.lang.InstantiationException
      * @throws java.lang.IllegalAccessException
      */
-    public static void privateEmptyConstructorTest(final Class clazz)
+    public static void privateEmptyConstructorTest(final Class<?> clazz)
         throws InstantiationException, IllegalAccessException,
         IllegalArgumentException
     {
-        final Constructor[] constructors = clazz.getDeclaredConstructors();
-        for (final Constructor constructor : constructors)
+        final Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+        for (final Constructor<?> constructor : constructors)
         {
             if (!Modifier.isPrivate(constructor.getModifiers()))
             {

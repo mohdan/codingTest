@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mytaxi.controller.mapper.CarManufacturerMapper;
 import com.mytaxi.controller.mapper.CarMapper;
 import com.mytaxi.datatransferobject.CarDTO;
+import com.mytaxi.datatransferobject.CarManufacturerDTO;
 import com.mytaxi.domainobject.CarDO;
 import com.mytaxi.domainvalue.car.CarRating;
 import com.mytaxi.domainvalue.car.CarStatus;
@@ -47,19 +49,19 @@ public class CarController
 
 
     @GetMapping("/{carId}")
-    public CarDTO getCar(@Valid @PathVariable long carId) throws EntityNotFoundException
+    public CarManufacturerDTO getCar(@Valid @PathVariable long carId) throws EntityNotFoundException
     {
-        return CarMapper.makeCarDTO(carService.find(carId));
+        return CarManufacturerMapper.makeCarManufacturerDTO(carService.find(carId));
     }
 
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CarDTO createCar(@Valid @RequestBody CarDTO carDTO)
+    public CarManufacturerDTO createCar(@Valid @RequestBody CarDTO carDTO)
         throws ConstraintsViolationException, EntityNotFoundException
     {
         CarDO carDO = CarMapper.makeCarDO(carDTO);
-        return CarMapper.makeCarDTO(carService.create(carDO));
+        return CarManufacturerMapper.makeCarManufacturerDTO(carService.create(carDO));
     }
 
 
@@ -80,9 +82,9 @@ public class CarController
 
 
     @GetMapping
-    public List<CarDTO> findCars(@RequestParam CarStatus status)
+    public List<CarManufacturerDTO> findCars(@RequestParam CarStatus status)
         throws ConstraintsViolationException, EntityNotFoundException
     {
-        return CarMapper.makeCarDTOList(carService.find(status));
+        return CarManufacturerMapper.makeCarManufacturerDTOList(carService.find(status));
     }
 }

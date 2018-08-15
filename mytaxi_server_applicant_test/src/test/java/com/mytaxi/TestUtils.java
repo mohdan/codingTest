@@ -2,12 +2,11 @@ package com.mytaxi;
 
 import java.time.ZonedDateTime;
 
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import com.mytaxi.datatransferobject.CarDTO;
+import com.mytaxi.datatransferobject.CarManufacturerDTO;
 import com.mytaxi.datatransferobject.DriverCarDTO;
 import com.mytaxi.datatransferobject.DriverDTO;
+import com.mytaxi.datatransferobject.ManufacturerDTO;
 import com.mytaxi.domainobject.CarDO;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainobject.ManufacturerDO;
@@ -18,7 +17,7 @@ import com.mytaxi.domainvalue.car.CarStatus;
 import com.mytaxi.domainvalue.car.EngineType;
 import com.mytaxi.filter.SearchDriverFilter;
 
-@RunWith(MockitoJUnitRunner.class)
+
 public abstract class TestUtils
 {
 
@@ -28,16 +27,9 @@ public abstract class TestUtils
         String licensePlate = "MH11 1111";
         Integer seatCount = 2;
         EngineType engineType = EngineType.GAS;
-
-        /*
-         * CarRating rating = CarRating.FIVE_STAR; CarStatus status =
-         * CarStatus.OFFDUTY;
-         */
-
         CarDO carDO = new CarDO(licensePlate, seatCount, engineType, Boolean.TRUE, getManufacturer());
 
         carDO.setId(1L);
-        // carDO.setDateCreated(ZonedDateTime.now());
         return carDO;
     }
 
@@ -52,12 +44,27 @@ public abstract class TestUtils
         manufacturer.setDateCreated(ZonedDateTime.now());
         return manufacturer;
     }
+    
+    
+    public ManufacturerDTO getManufacturerDTO()
+    {
+        String name = "Audi";
+        String model = "A01";
+        return ManufacturerDTO.newBuilder().setId(1L).setName(name).setModel(model).createManufacturerDTO();
+    }
 
 
     public CarDTO getCarDTO()
     {
         return CarDTO.newBuilder().setConvertable(true).setEngineType(EngineType.GAS).setLicensePlate("MH11 1111")
             .setSeatCount(2).setManufacturerId(1L).setRating(CarRating.FIVE_STAR).createCarDTO();
+    }
+    
+    
+    public CarManufacturerDTO getCarManufacturerDTO()
+    {
+        return CarManufacturerDTO.newBuilder().setConvertable(true).setEngineType(EngineType.GAS).setLicensePlate("MH11 1111")
+            .setSeatCount(2).setManufacturer(getManufacturerDTO()).setRating(CarRating.FIVE_STAR).createCarManufacturerDTO();
     }
 
 
@@ -68,7 +75,6 @@ public abstract class TestUtils
         String password = "test";
         DriverDO driverDO = new DriverDO(username, password);
         driverDO.setId(1L);
-        // driverDO.setDateCreated(ZonedDateTime.now());
         driverDO.setDeleted(false);
 
         driverDO.setOnlineStatus(OnlineStatus.ONLINE);
@@ -130,7 +136,8 @@ public abstract class TestUtils
         String username = "test";
         String password = "test";
 
-        return DriverDTO.newBuilder().setId(1L).setPassword(password).setUsername(username).setCoordinate(geoCoordinate).createDriverDTO();
+        return DriverDTO.newBuilder().setId(1L).setPassword(password)
+            .setUsername(username).setCoordinate(geoCoordinate).createDriverDTO();
     }
 
 
@@ -140,8 +147,9 @@ public abstract class TestUtils
         String username = "test";
         String password = "test";
 
-        return DriverCarDTO.newBuilder().setId(1L).setPassword(password).setUsername(username).setCoordinate(geoCoordinate)
-            .setCar(getCarDTO()).createDriverDTO();
+        return DriverCarDTO.newBuilder().setId(1L).setPassword(password)
+            .setUsername(username).setCoordinate(geoCoordinate)
+            .setCar(getCarManufacturerDTO()).createDriverDTO();
     }
 
 

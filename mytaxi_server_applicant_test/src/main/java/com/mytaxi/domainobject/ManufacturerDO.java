@@ -39,6 +39,7 @@ public class ManufacturerDO
     private Boolean deleted = false;
 
 
+    @SuppressWarnings("unused")
     private ManufacturerDO()
     {}
 

@@ -18,7 +18,11 @@ public class UserService
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+    /**
+     * User for Oauth2 authentication for generation of bearer token
+     * 
+     * @param user      
+     */
     public void save(User user)
     {
         user.setPassword(passwordEncoder.encode(user.getPassword()));

@@ -43,6 +43,9 @@ public class MytaxiServerApplicantTestApplication extends WebMvcConfigurerAdapte
     }
 
 
+    /*
+     * To assist Swagger 
+     */
     @Bean
     public Docket docket()
     {
@@ -52,6 +55,9 @@ public class MytaxiServerApplicantTestApplication extends WebMvcConfigurerAdapte
     }
 
 
+    /*
+     * Api Info for Swagger
+     */
     private ApiInfo generateApiInfo()
     {
         return new ApiInfo("mytaxi Server Applicant Test Service",

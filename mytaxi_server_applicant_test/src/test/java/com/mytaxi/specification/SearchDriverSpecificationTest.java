@@ -22,7 +22,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mytaxi.MytaxiServerApplicantTestApplication;
-import com.mytaxi.domainobject.CarDO;
 import com.mytaxi.domainobject.DriverDO;
 import com.mytaxi.domainvalue.OnlineStatus;
 import com.mytaxi.domainvalue.car.CarRating;
@@ -37,15 +36,13 @@ public class SearchDriverSpecificationTest
 
     private SearchDriverSpecification searchDriverSpecification;
     private CriteriaBuilder criteriaBuilderMock;
-    private CriteriaQuery criteriaQueryMock;
+    private CriteriaQuery<?> criteriaQueryMock;
     private Predicate predicateMock;
     private Root<DriverDO> driverDORootMock;
     private Path<DriverDO> driverDOPathMock;
 
 
-    /*
-     * private Root<CarDO> carDORootMock; private Path<CarDO> carDOPathMock;
-     */
+    @SuppressWarnings("unchecked")
     @Before
     public void setUp()
     {
@@ -100,30 +97,30 @@ public class SearchDriverSpecificationTest
             return new ArrayList<Expression<Boolean>>();
         }));
 
-        when(driverDORootMock.get(searchDriverSpecification.USERNAME)).then(((invocation) -> {
+        when(driverDORootMock.get(SearchDriverSpecification.USERNAME)).then(((invocation) -> {
             return driverDOPathMock;
         }));
 
-        when(driverDORootMock.get(searchDriverSpecification.ONLINE_STATUS)).then(((invocation) -> {
+        when(driverDORootMock.get(SearchDriverSpecification.ONLINE_STATUS)).then(((invocation) -> {
             return driverDOPathMock;
         }));
 
-        when(driverDORootMock.get(searchDriverSpecification.CAR)).then(((invocation) -> {
+        when(driverDORootMock.get(SearchDriverSpecification.CAR)).then(((invocation) -> {
             return driverDOPathMock;
         }));
 
-        when(driverDORootMock.get(searchDriverSpecification.LICENSE_PLATE)).then(((invocation) -> {
+        when(driverDORootMock.get(SearchDriverSpecification.LICENSE_PLATE)).then(((invocation) -> {
             return driverDOPathMock;
         }));
 
-        when(driverDORootMock.get(searchDriverSpecification.RATING)).then(((invocation) -> {
+        when(driverDORootMock.get(SearchDriverSpecification.RATING)).then(((invocation) -> {
             return driverDOPathMock;
         }));
 
-        when(driverDORootMock.get(searchDriverSpecification.MANUFACTURER)).then(((invocation) -> {
+        when(driverDORootMock.get(SearchDriverSpecification.MANUFACTURER)).then(((invocation) -> {
             return driverDOPathMock;
         }));
-        when(driverDORootMock.get(searchDriverSpecification.NAME)).then(((invocation) -> {
+        when(driverDORootMock.get(SearchDriverSpecification.NAME)).then(((invocation) -> {
             return driverDOPathMock;
         }));
 

@@ -164,10 +164,10 @@ public class DriverControllerTest extends TestUtils
     public void findDriverByOnlineStatusTest() throws Exception
     {
         List<DriverDO> driverData = Collections.singletonList(getDriver());
-        List<DriverCarDTO> driverDataDTO = Collections.singletonList(getDriverCarDTO());
+        List<DriverCarDTO> driverDataDTOs = Collections.singletonList(getDriverCarDTO());
 
         Mockito.doReturn(driverData).when(driverService).find(Mockito.any(OnlineStatus.class));
-        Mockito.doReturn(driverDataDTO).when(driverCarMapper).makeDriverCarDTOList(Mockito.any());
+        Mockito.doReturn(driverDataDTOs).when(driverCarMapper).makeDriverCarDTOList(Mockito.any());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/drivers").param("onlineStatus",
             OnlineStatus.ONLINE.toString());
@@ -210,12 +210,15 @@ public class DriverControllerTest extends TestUtils
 
 
     @Test
-    public void findDriverByDriverAttributesTest() throws Exception
+    public void searchDriverTest() throws Exception
     {
         List<DriverDO> driverData = Collections.singletonList(getDriver());
+        List<DriverCarDTO> driverDataDTOs = Collections.singletonList(getDriverCarDTO());
+
         when(driverService.searchDriver(Mockito.any(SearchDriverFilter.class))).then(((invocation) -> {
             return driverData;
         }));
+        Mockito.doReturn(driverDataDTOs).when(driverCarMapper).makeDriverCarDTOList(Mockito.any());
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/drivers/search");
 
@@ -223,7 +226,7 @@ public class DriverControllerTest extends TestUtils
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andReturn();
         final String responseBody = result.getResponse().getContentAsString();
-        // Assert.assertTrue(responseBody.contains("test"));
+        Assert.assertTrue(responseBody.contains("test"));
     }
 
 }
