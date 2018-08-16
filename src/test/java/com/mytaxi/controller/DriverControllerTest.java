@@ -185,7 +185,7 @@ public class DriverControllerTest extends TestUtils
     {
         // Mockito.doNothing().when(driverService).deselectCar(Mockito.any(Long.class));
         given(driverService.deselectCar(Mockito.any())).willReturn(new DriverDO("driver 2", "driver 2"));
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/v1/drivers/{driverId}/car", "2");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/drivers/{driverId}/car", "2");
         MvcResult result = mockMvc.perform(requestBuilder)
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andReturn();
@@ -199,7 +199,7 @@ public class DriverControllerTest extends TestUtils
         DriverDO driverData = getDriver();
         Mockito.doReturn(driverData).when(driverService).selectCar(Mockito.any(Long.class), Mockito.any(Long.class));
         Mockito.doReturn(getDriverCarDTO()).when(driverCarMapper).makeDriverCarDTO(Mockito.any(DriverDO.class));
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/v1/drivers/{driverId}/{carId}", "2", "2");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/v1/drivers/{driverId}/car/{carId}", "2", "2");
         MvcResult result = mockMvc.perform(requestBuilder)
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andReturn();

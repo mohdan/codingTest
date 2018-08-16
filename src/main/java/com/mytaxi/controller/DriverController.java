@@ -78,7 +78,13 @@ public class DriverController
         DriverDO driverDO = driverMapper.makeDriverDO(driverDTO);
         return driverMapper.makeDriverDTO(driverService.create(driverDO));
     }
-
+    
+    @PutMapping("/{driverId}/status")
+    public DriverDTO update(@Valid @PathVariable long driverId, @RequestParam OnlineStatus onlineStatus) throws EntityNotFoundException
+    {
+    	return driverMapper.makeDriverDTO(driverService.update(driverId, onlineStatus));
+   
+    }
 
     @DeleteMapping("/{driverId}")
     public void deleteDriver(@Valid @PathVariable long driverId) throws EntityNotFoundException
@@ -104,7 +110,7 @@ public class DriverController
     }
 
 
-    @PostMapping("/{driverId}/{carId}")
+    @PutMapping("/{driverId}/car/{carId}")
     public ResponseEntity<Response> selectCarByDriver(@Valid @PathVariable Long driverId, @Valid @PathVariable Long carId,
         HttpServletRequest request) throws EntityNotFoundException, ConstraintsViolationException, CarAlreadyInUseException
     {
@@ -117,7 +123,7 @@ public class DriverController
     }
 
 
-    @DeleteMapping("/{driverId}/car")
+    @PutMapping("/{driverId}/car")
     public ResponseEntity<Response> deselectCarByDriver(@Valid @PathVariable Long driverId, HttpServletRequest request)
         throws EntityNotFoundException, ConstraintsViolationException
     {

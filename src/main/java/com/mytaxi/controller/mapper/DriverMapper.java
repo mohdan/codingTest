@@ -33,7 +33,8 @@ public class DriverMapper
         DriverDTO.DriverDTOBuilder driverDTOBuilder;
 
         driverDTOBuilder = DriverDTO.newBuilder().setId(driverDO.getId())
-            .setPassword(driverDO.getPassword()).setUsername(driverDO.getUsername());
+            .setPassword(driverDO.getPassword()).setUsername(driverDO.getUsername())
+            .setOnlineStatus(driverDO.getOnlineStatus());
 
         GeoCoordinate coordinate = driverDO.getCoordinate();
         if (coordinate != null)

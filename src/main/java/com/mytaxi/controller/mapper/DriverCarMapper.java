@@ -29,7 +29,8 @@ public class DriverCarMapper
         DriverCarDTO.DriverDTOBuilder driverCarDTOBuilder;
 
         driverCarDTOBuilder = DriverCarDTO.newBuilder().setId(driverDO.getId())
-            .setPassword(driverDO.getPassword()).setUsername(driverDO.getUsername());
+            .setPassword(driverDO.getPassword()).setUsername(driverDO.getUsername())
+            		.setOnlineStatus(driverDO.getOnlineStatus());
 
         GeoCoordinate coordinate = driverDO.getCoordinate();
         if (coordinate != null)

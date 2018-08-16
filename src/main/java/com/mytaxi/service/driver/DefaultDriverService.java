@@ -92,6 +92,23 @@ public class DefaultDriverService implements DriverService
         }
         return driver;
     }
+    
+    /**
+     * Update onlineStatus for driver.
+     *
+     * @param driverId
+     * @param onlineStatus
+     * @return 
+     * @throws EntityNotFoundException 
+     */
+    @Override
+    @Transactional
+    public DriverDO update(Long driverId, OnlineStatus onlineStatus) throws EntityNotFoundException
+    {
+    	DriverDO driverDO = findDriverChecked(driverId);
+        driverDO.setOnlineStatus(onlineStatus);
+        return driverDO;
+    }
 
 
     /**

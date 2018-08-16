@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mytaxi.domainvalue.GeoCoordinate;
+import com.mytaxi.domainvalue.OnlineStatus;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DriverCarDTO
@@ -20,6 +21,8 @@ public class DriverCarDTO
     private String password;
 
     private GeoCoordinate coordinate;
+    
+    private OnlineStatus onlineStatus;
 
     private CarManufacturerDTO car;
 
@@ -28,12 +31,13 @@ public class DriverCarDTO
     {}
 
 
-    private DriverCarDTO(Long id, String username, String password, GeoCoordinate coordinate, CarManufacturerDTO car)
+    private DriverCarDTO(Long id, String username, String password, GeoCoordinate coordinate, OnlineStatus onlineStatus, CarManufacturerDTO car)
     {
         this.id = id;
         this.username = username;
         this.password = password;
         this.coordinate = coordinate;
+        this.onlineStatus = onlineStatus;
         this.car = car;
     }
 
@@ -67,6 +71,11 @@ public class DriverCarDTO
     {
         return coordinate;
     }
+    
+    public OnlineStatus getOnlineStatus()
+    {
+        return onlineStatus;
+    }
 
 
     public CarManufacturerDTO getCar()
@@ -80,6 +89,7 @@ public class DriverCarDTO
         private String username;
         private String password;
         private GeoCoordinate coordinate;
+        private OnlineStatus onlineStatus;
         private CarManufacturerDTO car;
 
 
@@ -109,6 +119,12 @@ public class DriverCarDTO
             this.coordinate = coordinate;
             return this;
         }
+        
+        public DriverDTOBuilder setOnlineStatus(OnlineStatus onlineStatus)
+        {
+            this.onlineStatus = onlineStatus;
+            return this;
+        }
 
 
         public DriverDTOBuilder setCar(CarManufacturerDTO car)
@@ -120,7 +136,7 @@ public class DriverCarDTO
 
         public DriverCarDTO createDriverDTO()
         {
-            return new DriverCarDTO(id, username, password, coordinate, car);
+            return new DriverCarDTO(id, username, password, coordinate,onlineStatus, car);
         }
 
     }
